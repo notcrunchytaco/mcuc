@@ -1,0 +1,207 @@
+<html><head>
+<title>MCUC Twitter</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+#mySidebar {	
+width: 90px;
+}
+.w3-sidebar {	
+width: 90px;
+}
+body {margin:0;}
+
+.icon-bar {
+    width: 100%;
+    background-color: #404040;
+    overflow: auto;
+}
+
+.icon-bar a {
+    float: left;
+    width: 12.5%;
+    text-align: center;
+    padding: 12px 0;
+    transition: all 0.3s ease;
+    color: white;
+    font-size: 36px;
+    height: 69px;
+}
+
+.icon-bar a:hover {
+    background-color: #000;
+}
+
+.active {
+    background-color: #4CAF50 !important;
+}
+#nameInputBox, #nameBtn {
+	margin-top: 125px;
+}
+body  {
+    background-attachment: fixed;
+}
+</style>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script>
+function checkName() {
+	var nameArr;
+	var p = document.getElementById("p1");
+	var xhr = new XMLHttpRequest();
+	var name = document.getElementById("nameInputBox").value;
+	if (name.includes(' ') || name.includes(',')) {
+	//p.innerHTML = "";
+	if (name.includes(' ')) {
+	nameArr = name.split(' ');
+	}
+	if (name.includes(',')) {
+	nameArr = name.split(',');
+	}
+	var i;
+	for (i = 0; i < nameArr.length; i++) {
+	var xhttpArr = new XMLHttpRequest();
+	xhttpArr.open("GET", "https://axis.iaero.me/accinfo?username="+ nameArr[i] +"&format=xml", false);
+	xhttpArr.send();
+	
+    //p += nameArr[i] + "<br>";
+	if (nameArr[i].indexOf(/^([a-zA-Z0-9_]+)$/) && nameArr[i].length >= 3 && nameArr[i].length <= 16) {
+	if (xhttpArr.status == "200") {
+	
+    var xmlDoc = xhttpArr.responseXML;
+  function xmlToString(xmlData) { 
+
+        var xmlString;
+        if (window.ActiveXObject){
+            xmlString = xmlData.xml;
+        }
+        else{
+            xmlString = (new XMLSerializer()).serializeToString(xmlData);
+        }
+        return xmlString;
+    }   
+	
+		if (xmlToString(xmlDoc).includes('"unknown'))
+		{
+			//p.innerHTML += nameArr[i] + ": <span style=\"color: green\">Available/Pending</span>" + "<br>";
+			var table = document.getElementById("nameTable");
+			var row = table.insertRow();
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			cell1.innerHTML = nameArr[i];
+			cell2.innerHTML = "<span style=\"color: green\">Available/Pending</span>";
+			
+		}
+		if (xmlToString(xmlDoc).includes('migrated="true"'))
+		{
+			//p.innerHTML += nameArr[i] + ": <span style=\"color: red\">Unavailable</span>" + "<br>";
+			var table = document.getElementById("nameTable");
+			var row = table.insertRow();
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			cell1.innerHTML = nameArr[i];
+			cell2.innerHTML = "<span style=\"color: red\">Unavailable</span>";
+		}
+		
+	
+}
+else {
+		p.innerHTML = "An error has occurred. Please try again in a bit. Error Code: " + xhr.status;
+	}
+  }
+	}
+	}
+	xhr.open("GET", "https://axis.iaero.me/accinfo?username="+ name +"&format=xml", false);
+	xhr.send();
+	if (name.indexOf(/^([a-zA-Z0-9_]+)$/) && name.length >= 3 && name.length <= 16) {
+	if (xhr.status == "200") {
+	
+    var xmlDoc = xhr.responseXML;
+  function xmlToString(xmlData) { 
+
+        var xmlString;
+        if (window.ActiveXObject){
+            xmlString = xmlData.xml;
+        }
+        else{
+            xmlString = (new XMLSerializer()).serializeToString(xmlData);
+        }
+        return xmlString;
+    }   
+	
+		
+		if (xmlToString(xmlDoc).includes('"unknown'))
+		{
+			//p.innerHTML += name + ": <span style=\"color: green\">Available/Pending</span>" + "<br>";
+			var table = document.getElementById("nameTable");
+			var row = table.insertRow();
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			cell1.innerHTML =  name;
+			cell2.innerHTML = "<span style=\"color: green\">Available/Pending</span>";
+			
+		}
+		if (xmlToString(xmlDoc).includes('migrated="true"'))
+		{
+			//p.innerHTML += name + ": <span style=\"color: red\">Unavailable</span>" + "<br>";
+			var table = document.getElementById("nameTable");
+			var row = table.insertRow();
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			cell1.innerHTML =  name;
+			cell2.innerHTML = "<span style=\"color: red\">Unavailable</span>";
+			
+		}
+		
+	
+}
+else {
+		p.innerHTML = "An error has occurred. Please try again in a bit. Error Code: " + xhr.status;
+	}
+}
+}
+</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</style>
+<body style="background-color: #afaaaa; background-image: url(/img/dotted_bg2.png);">
+
+<div class="icon-bar">
+   <center><a href="http://mcuc.netii.net/" title="Home" style=" background-color: #4AAA4E"><img src="/img/home.png" style="width: 65px; height: 65px; margin-top: -10px;"></a></center>
+  
+  <center><a href="/email/" title="EMail"><img src="/img/email2.png" style="width: 65px; height: 65px; margin-top: -10px;" ></a></center>
+  
+  <center><a href="/skype/" title="Skype"><img src="/img/skype_logo2.png" style="width: 65px; height: 65px; margin-top: -10px;"></a></center>
+  
+  <center><a href="/discord/" title="Discord"><img src="/img/discord2.png" style="width: 65px; height: 65px; margin-top: -10px;"></a></center>
+  
+  <center><a href="/youtube/" title="Youtube"><img src="/img/YT2.png" style="width: 65px; height: 65px; margin-top: -10px;"></a></center>
+ 
+ <center><a href="/twitter/" title="Twitter"><img src="/img/twit-new.png" style="width: 65px; height: 65px; margin-top: -10px;"></a></center>
+ 
+ <center><a href="/games/" title="Games"><img src="/img/games2.png" style="width: 65px; height: 65px; margin-top: -10px;"></a></center>
+
+ <center><a href="/websites/" title="Websites"><img src="/img/www.png" style="width: 65px; height: 65px; margin-top: -10px;"></a></center>
+</div>
+<center>
+<p style="font-family: Raleway; font-size: 30px; color: blue;"><b>Be Patient.</b> The more names you put the longer it will take. Don't put too many names. Also, make sure the name doesn't have any invalid characters or it won't work!</p>
+<input id="nameInputBox" class="nameChecker" placeholder="Username(s) here, seperate by space or comma" size="50">
+<button id="nameBtn" class="nameChecker" onclick="checkName()">Check</button>
+<button id="nameBtn" class="nameChecker" onclick="location.reload(true)">Clear Output</button>
+<table id="nameTable">
+ <tr>
+	<th>Username</th>
+	<th>Availability</th>
+ </tr>
+ 	
+</table>
+<p id="p1"></p>
+<p id="p2"></p>
+</center>
+
+</body>
+</div>
+</html>
