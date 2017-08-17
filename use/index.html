@@ -62,7 +62,7 @@ function checkName() {
 	var i;
 	for (i = 0; i < nameArr.length; i++) {
 	var xhttpArr = new XMLHttpRequest();
-	xhttpArr.open("GET", "https://axis.iaero.me/accinfo?username="+ nameArr[i] +"&format=xml", false);
+	xhttpArr.open("GET", "https://www.roblox.com/UserCheck/DoesUsernameExist?username=" + nameArr[i], false);
 	xhttpArr.send();
 	
     //p += nameArr[i] + "<br>";
@@ -112,7 +112,7 @@ else {
   }
 	}
 	}
-	xhr.open("GET", "https://axis.iaero.me/accinfo?username="+ name +"&format=xml", false);
+	xhr.open("GET", "https://www.roblox.com/UserCheck/DoesUsernameExist?username=" + name, false);
 	xhr.send();
 	if (name.indexOf(/^([a-zA-Z0-9_]+)$/) && name.length >= 3 && name.length <= 16) {
 	if (xhr.status == "200") {
